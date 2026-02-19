@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -22,6 +23,20 @@ public class ForegroundService extends Service {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .build();
         startForeground(1, notification);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 5; i++) {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    Log.d("FORE:", "count" + i);
+                }
+            }
+        }).start();
         return super.onStartCommand(intent, flags, startId);
     }
 
