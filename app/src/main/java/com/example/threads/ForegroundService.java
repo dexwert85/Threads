@@ -1,6 +1,5 @@
 package com.example.threads;
 
-import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -10,7 +9,6 @@ import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.ServiceCompat;
 
 public class ForegroundService extends Service {
     private static final String CHANNEL_ID = "foreground_channel";
@@ -28,17 +26,15 @@ public class ForegroundService extends Service {
     }
 
     private void createNotificationChannel() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(
-                    CHANNEL_ID,
-                    "Foreground Service Channel",
-                    NotificationManager.IMPORTANCE_LOW
-            );
+        NotificationChannel channel = new NotificationChannel(
+                CHANNEL_ID,
+                "Foreground Service Channel",
+                NotificationManager.IMPORTANCE_DEFAULT
+        );
 
-            NotificationManager manager = getSystemService(NotificationManager.class);
-            if (manager != null) {
-                manager.createNotificationChannel(channel);
-            }
+        NotificationManager manager = getSystemService(NotificationManager.class);
+        if (manager != null) {
+            manager.createNotificationChannel(channel);
         }
     }
 
